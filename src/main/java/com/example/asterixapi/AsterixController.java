@@ -37,4 +37,26 @@ public class AsterixController {
     public Character findByAge(@PathVariable int age) throws CharacterNotFoundException{
         return service.findByAge(age);
     }
+    @GetMapping("/findByProfession/{profession}")
+    public Character findByProfession(@PathVariable String profession) throws CharacterNotFoundException{
+        return service.findByProfession(profession);
+    }
+    @GetMapping("/findAllByProfession/{profession}")
+    public List<Character> findAllByProfession(@PathVariable String profession) throws CharacterNotFoundException{
+        return service.findAllByProfession(profession);
+    }
+    @GetMapping("/findAverageAgeByProfession/{profession}")
+    public double findAverageAgeByProfession(@PathVariable String profession) throws CharacterNotFoundException{
+        return countAverage(service.findAllByProfession(profession));
+    }
+    private double countAverage(List<Character> characters){
+        double average=0;
+
+        for (Character character:characters
+             ) {
+            average+=character.age();
+            
+        }
+        return average/characters.size();
+    }
 }

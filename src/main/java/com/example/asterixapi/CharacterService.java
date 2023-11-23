@@ -2,6 +2,8 @@ package com.example.asterixapi;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +42,16 @@ public class CharacterService {
     }
     public Character findByAge(int age)throws CharacterNotFoundException{
         return repo.findByAge(age)
-                .orElseThrow(()->new CharacterNotFoundException("The Character with the age: "+ age+" couldn't be found"));
+                .orElseThrow(()-> new CharacterNotFoundException("The Character with the age"+age+" couldn#t be found"));
+    }
 
+    public Character findByProfession(String profession)throws CharacterNotFoundException{
+        return repo.findByProfession(profession)
+                .orElseThrow(()->new CharacterNotFoundException("The Character with the profession: "+ profession+" couldn't be found"));
+
+    }
+    public List<Character> findAllByProfession(String profession)throws CharacterNotFoundException{
+        return repo.findAllByProfession(profession)
+                .orElseThrow(()->new CharacterNotFoundException("For the profession:"+ profession+" no characters found"));
     }
 }
