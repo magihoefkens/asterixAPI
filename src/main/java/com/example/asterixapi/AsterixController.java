@@ -29,6 +29,12 @@ public class AsterixController {
         service.delete(id);
     }
 
-
-
+    @GetMapping("/findByName/{name}")
+    public Character findByName(@PathVariable String name) throws CharacterNotFoundException{
+        return service.findByName(name);
+    }
+    @GetMapping("/findByAge/{age}")
+    public Character findByAge(@PathVariable int age) throws CharacterNotFoundException{
+        return service.findByAge(age);
+    }
 }

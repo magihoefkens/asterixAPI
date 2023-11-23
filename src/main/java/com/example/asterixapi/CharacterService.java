@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +32,15 @@ public class CharacterService {
     public void delete(String id) throws CharacterNotFoundException{
         Character findCharacter=getCharacterById(id);
         repo.delete(findCharacter);
+    }
+    public Character findByName(String name)throws CharacterNotFoundException{
+        return repo.findByName(name)
+                .orElseThrow(()->new CharacterNotFoundException("The Character with the name: "+ name+" couldn't be found"));
+
+    }
+    public Character findByAge(int age)throws CharacterNotFoundException{
+        return repo.findByAge(age)
+                .orElseThrow(()->new CharacterNotFoundException("The Character with the age: "+ age+" couldn't be found"));
+
     }
 }
