@@ -17,7 +17,7 @@ public class AsterixController {
 
     }
     @PostMapping
-    public List<Character> saveCharacters(@RequestBody List<Character> characters){
+    public List<Character> saveCharacters(@RequestBody List<NewCharacterDTO> characters){
         return service.saveCharacters(characters);
     }
     @PutMapping("/{id}")
@@ -27,6 +27,11 @@ public class AsterixController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id)throws CharacterNotFoundException{
         service.delete(id);
+    }
+
+    @GetMapping("/findById/{id}")
+    public Character findById(@PathVariable String id) throws CharacterNotFoundException{
+        return service.getCharacterById(id);
     }
 
     @GetMapping("/findByName/{name}")

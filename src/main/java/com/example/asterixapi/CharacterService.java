@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +24,15 @@ public class CharacterService {
         return repo.findById(id)
                 .orElseThrow(()->new CharacterNotFoundException("Character mit der Id: "+id+" wurde nicht gefunden!"));
     }
-    public List<Character> saveCharacters(List<Character> characters){
-        return repo.saveAll(characters);
+    public List<Character> saveCharacters(List<NewCharacterDTO> characters){
+        List<Character> result=new ArrayList<>();
+        for (NewCharacterDTO newCharachter:characters
+             ) {
+            Character newChar= new Character(UUID.randomUUID().toString(),newCharachter.name(),newCharachter.age(),newCharachter.profession());
+            repo.save(newChar);
+            result.add(newChar);
+        }
+        return result;
     }
 
     public Character updateCharacter(String id, Character character) throws CharacterNotFoundException {
